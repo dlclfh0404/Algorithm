@@ -30,7 +30,7 @@ int main()
     {
         cin >> v[i][0] >> v[i][1];
         
-        // 노선의 종류가 circle이라면
+        
         if (v[i][0] > v[i][1])
         {
             // circle이 가질 수 있는 종착점의 최댓값을 찾는다.
@@ -48,14 +48,8 @@ int main()
     
     for (int j = 0; j < m; ++j)
     {
-        // 3번 경우에 대해 검사하는 조건문이다. (line과 circle)
-        // 해당 노선이 circlemax 범위 안에 포함되는가? 그렇다면 답이 될 수 없다.
-        // circle의 경우는 이미 n을 더했으므로 이 조건문에 걸리지 않는다.
         if (v[j][1] <= circlemax)
             continue;
-
-        // 어떤 노선에 포함되지 않는가?
-        // 시작점은 오름차순 정렬된 상태이므로 비교하지 않아도 된다. 종착점만 비교하여 걸러낸다.
         if (res.empty() || (res.size() && res.back()[1] < v[j][1]))
             res.push_back(v[j]);
     }
