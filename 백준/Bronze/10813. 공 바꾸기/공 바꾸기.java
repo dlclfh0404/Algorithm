@@ -1,21 +1,32 @@
+import java.io.*;
 import java.util.*;
-public class Main {
 
-	public static void main(String[] args) throws Exception {
-		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt() , M = sc.nextInt();
-		int[] bag = new int[N+1]; // 0부터 출력을 방지
-		for(int i = 1; i <= N; i++) {
-			bag[i] = i; // 증가값을 배열에 하나씩 넣기
-		}
-		for(int i = 0; i < M; i++) {
-			int a = sc.nextInt(), b = sc.nextInt();
-			int temp = bag[a];
-			bag[a] = bag[b];
-			bag[b] = temp;
-		}
-		for(int j = 0; j < N; j++) {
-			System.out.print(bag[j+1]+" ");
-		}
-	}
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(bf.readLine(), " ");
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+
+        int[] bag = new int[N];
+
+        for (int i = 0; i < N; i++) {
+            bag[i] = i+1;
+        }
+
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(bf.readLine(), " ");
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+
+            int temp = bag[a-1];
+            bag[a-1] = bag[b-1];
+            bag[b-1] = temp;
+        }
+        bf.close();
+
+        for (int k : bag)
+            System.out.print(k + " ");
+    }
 }
