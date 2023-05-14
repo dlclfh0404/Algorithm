@@ -1,24 +1,27 @@
 import java.util.*;
+import java.io.*;
+
 public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(bf.readLine(), " ");
+        int N = Integer.parseInt(st.nextToken());
+        int[] arr = new int[N];
+        int M = Integer.parseInt(st.nextToken());
 
-	public static void main(String[] args) throws Exception {
-		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt();
-		int[] arr = new int[N];
-		
-		int M = sc.nextInt();
-		for(int i = 0; i < M; i++) {
-			int a = sc.nextInt(); // 얘부터
-			int b = sc.nextInt(); // 얘까지
-			int ball = sc.nextInt(); // 얘번의 공을 넣을게...
-			
-			for(int j = a-1; j < b; j++) {
-				arr[j] = ball;
-			}
-		}
-		for(int i = 0; i < arr.length; i++) {
-			System.out.print(arr[i]+" ");
-		}
-	}
+        for(int i=0; i<M; i++) {
+            st = new StringTokenizer(bf.readLine(), " ");
+            int a = Integer.parseInt(st.nextToken()); // a번 바구니부터
+            int b = Integer.parseInt(st.nextToken()); // b번 바구니까지
+            int ball = Integer.parseInt(st.nextToken()); // ball번 공을 넣는다
 
+            for(int j = a-1; j < b; j++)
+            {
+                arr[j] = ball;
+            }
+        }
+        bf.close();
+        for (int k : arr)
+            System.out.print(k + " ");
+    }
 }
