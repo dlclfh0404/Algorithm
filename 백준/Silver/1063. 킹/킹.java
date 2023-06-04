@@ -1,64 +1,52 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-
-enum Move{
-    R(0, 1), L(0, -1), B(1, 0), T(-1, 0), RT(-1,1), LT(-1, -1), RB(1, 1), LB(1, -1);
-    public int y;
-    public int x;
-
-    Move(int y, int x){
-        this.y = y;
-        this.x = x;
-    }
-}
-
+import java.util.*;
+ 
 public class Main {
-    static int[][] chess = new int[8][8];
-    static Character[] row1 = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-    static Character[] col1 = {'8', '7', '6', '5', '4', '3', '2', '1'};
-    static List<Character> row = Arrays.asList(row1);
-    static List<Character> col = Arrays.asList(col1);
+ 
     public static void main(String[] args) throws IOException {
+ 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-
-        int kingX = row.indexOf(input[0].charAt(0));
-        int kingY = col.indexOf(input[0].charAt(1));
-        int stoneX = row.indexOf(input[1].charAt(0));;
-        int stoneY = col.indexOf(input[1].charAt(1));
-        int test = Integer.parseInt(input[2]);
-
-        chess[kingY][kingX] = 1;
-        chess[stoneY][stoneX] = 2;
-
-        while(test-- > 0){
-            Move m = Move.valueOf(br.readLine());
-            int moveKingX = kingX + m.x;
-            int moveKingY = kingY + m.y;
-            int moveStoneX;
-            int moveStoneY;
-            if(moveKingX == stoneX && moveKingY == stoneY) {
-                moveStoneX = stoneX + m.x;
-                moveStoneY = stoneY + m.y;
-            } else {
-                moveStoneX = stoneX;
-                moveStoneY = stoneY;
+        StringTokenizer st = new StringTokenizer(br.readLine());
+ 
+        char[] king = st.nextToken().toCharArray();
+        char[] stone = st.nextToken().toCharArray();
+        int N = Integer.parseInt(st.nextToken());
+ 
+        for (int i = 0; i < N; i++) {
+            String line = br.readLine();
+            char[] k_pos=king.clone();
+            char[] s_pos=stone.clone();
+            move(line, k_pos);
+            if (range(k_pos))
+                continue;
+            if(Arrays.equals(k_pos,s_pos)){
+                move(line, s_pos);
+                if (range(s_pos))
+                    continue;
             }
-            boolean condition = 0 <= moveKingX && moveKingX < 8 &&
-                                    0 <= moveKingY && moveKingY < 8 &&
-                                    0 <= moveStoneX && moveStoneX < 8 &&
-                                    0 <= moveStoneY && moveStoneY < 8;
-
-            if(condition){
-                kingX = moveKingX;
-                kingY = moveKingY;
-                stoneX = moveStoneX;
-                stoneY = moveStoneY;
-            }
+            king=k_pos;
+            stone=s_pos;
         }
-
-        System.out.println(row1[kingX] + "" + col1[kingY]);
-        System.out.println(row1[stoneX] + "" + col1[stoneY]);
+ 
+        System.out.println(king);
+        System.out.println(stone);
+    }
+ 
+    public static boolean range(char[] next){
+        return (next[0]<'A' || next[0]>'H' || next[1]<'1' || next[1]>'8');
+    }
+ 
+    public static void move(String pos, char[] next){
+ 
+        switch (pos){
+            case "R": next[0]++; break;
+            case "L": next[0]--; break;
+            case "B": next[1]--; break;
+            case "T": next[1]++; break;
+            case "RT": next[0]++; next[1]++; break;
+            case "LT": next[0]--; next[1]++; break;
+            case "RB": next[0]++; next[1]--; break;
+            case "LB": next[0]--; next[1]--; break;
+        }
     }
 }
